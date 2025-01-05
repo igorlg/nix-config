@@ -2,7 +2,8 @@
 ##   INSTALL   ##
 #################
 
-MACHINE="$1"
+hostname="$(hostname)"
+MACHINE="${1:-$hostname}"
 
 pushd "$HOME" || echo "Error: unable to go to $HOME"
 
@@ -27,4 +28,7 @@ nix run home-manager/master -- switch -b backup --flake .#"$MACHINE"
 
 # Add home manager bins to root user
 # You can also just use `sudo -E command` instead
-sudo sed '/Defaults.*secure_path/ s|"$|:/home/user/.nix-profile/bin"|' /etc/sudoers > /tmp/sudoers && sudo visudo -c -f /tmp/sudoers && cat /tmp/sudoers | sudo tee /etc/sudoers
+sudo sed '/Defaults.*secure_path/ s|"$|:/home/igorlg/.nix-profile/bin"|' /etc/sudoers > /tmp/sudoers \
+    && sudo visudo -c -f /tmp/sudoers \
+    && cat /tmp/sudoers \
+    | sudo tee /etc/sudoers

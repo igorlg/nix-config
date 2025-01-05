@@ -6,20 +6,20 @@
 }: let
   secretDir = "${config.home.homeDirectory}/.secret";
   configDir = "${config.home.homeDirectory}/.system-configuration";
-  username = "user";
+  username = "igorlg";
   machine = "work";
 in {
   kirk = {
     terminalTools.enable = true;
-    foot.enable = true;
+    # foot.enable = true;
     mpv.enable = true;
     mvi.enable = true;
     xdgMime.enable = true;
-    monero.enable = true;
+    monero.enable = false;
     git = {
       enable = true;
-      userEmail = "mail@rasmuskirk.com";
-      userName = "rasmus-kirk";
+      userEmail = "igor.lg@gmail.com";
+      userName = "igorlg";
     };
     helix.enable = true;
     homeManagerScripts = {
@@ -86,7 +86,7 @@ in {
     export PATH=$PATH:~/.cargo/bin:~/.local/bin
 
     # Yazi
-    export TERM=foot
+    export TERM=xterm-256color
 
     # Fix weird cargo concordium bug
     export LD_LIBRARY_PATH="${pkgs.zlib}/lib:$LD_LIBRARY_PATH";
@@ -98,11 +98,26 @@ in {
     export XCURSOR_PATH="$XCURSOR_PATH":/usr/share/icons:~/.local/share/icons
   '';
 
+  programs.gnome-terminal = {
+    enable = true;
+    showMenubar = false;
+
+    profile.d536f3e3-720f-45d0-ac45-f021b4b0afa1 = {
+      default = true;
+      visibleName = "my-config";
+
+      showScrollbar = false;
+      # font = "FiraCode Nerd Font 12";
+      font = "Hack Nerd Font Mono 10";
+    };
+  };
+
+
   home.packages = with pkgs; [
     # Misc
     gnome-tweaks
     keepassxc
-    thunderbird
+    # thunderbird
     yarn
 
     # Browsers
@@ -114,7 +129,7 @@ in {
     #mpv
 
     # Crytpo
-    monero-gui
+    # monero-gui
 
     # Chat
     slack
@@ -132,6 +147,8 @@ in {
     # Misc Terminal Tools
     wl-clipboard
     yt-dlp
+
+    bambu-studio
 
     (pkgs.writeShellApplication {
       name = "concordium-test-smart-contracts";
